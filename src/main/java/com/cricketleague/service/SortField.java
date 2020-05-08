@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum SortField {
-    AVG, STRIKING_RATES;
+    AVG, STRIKING_RATES,SIX_FOURS;
     static Map<SortField, Comparator<CricketDAO>> sortMap;
 
     public static void sortField() {

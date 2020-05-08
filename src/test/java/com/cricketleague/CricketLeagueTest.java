@@ -22,7 +22,7 @@ public class CricketLeagueTest {
     }
 
     @Test
-    public void givenBattingAverage_ShouldReturnCorrectRecord() {
+    public void givenIPLData_WhenGivenBattingAverage_ShouldReturnCorrectRecord() {
         try {
             cricketLeagueAnalyzer.loadIPLData(IPL_MOST_RUNS_FILE_PATH);
             String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.AVG);
@@ -35,7 +35,7 @@ public class CricketLeagueTest {
     }
 
     @Test
-    public void givenStrikingRates_ShouldReturnCorrectRecord() {
+    public void givenIPLData_WhenGivenStrikingRates_ShouldReturnCorrectRecord() {
         try {
             cricketLeagueAnalyzer.loadIPLData(IPL_MOST_RUNS_FILE_PATH);
             String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.STRIKING_RATES);
@@ -47,4 +47,16 @@ public class CricketLeagueTest {
         }
     }
 
+    @Test
+    public void givenIPLData_WhenGivenSixAndFours_ShouldReturnCorrectRecord() {
+
+        try {
+            cricketLeagueAnalyzer.loadIPLData(IPL_MOST_RUNS_FILE_PATH);
+            String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.SIX_FOURS);
+            IPLCSVFile[] iplDto = new Gson().fromJson(sortedData, IPLCSVFile[].class);
+            Assert.assertEquals("Andre Russell", iplDto[0].player);
+        } catch (CricketAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
 }

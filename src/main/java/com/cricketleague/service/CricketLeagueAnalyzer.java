@@ -22,14 +22,9 @@ public class CricketLeagueAnalyzer {
 
     public CricketLeagueAnalyzer() {
         this.sortMap = new HashMap<>();
-        Comparator<CricketDAO> avgComparator =
-                Comparator.comparing(iplBatsmanDAO -> iplBatsmanDAO.strikeRate, Comparator.reverseOrder());
-        this.sortMap.put(SortField.AVG, avgComparator);
-
-        Comparator<CricketDAO> strikeRateComparator =
-                Comparator.comparing(iplBatsmanDAO -> iplBatsmanDAO.strikeRate, Comparator.reverseOrder());
-        this.sortMap.put(SortField.STRIKING_RATES, strikeRateComparator);
-
+        this.sortMap.put(SortField.AVG, Comparator.comparing(cricketDAO -> cricketDAO.average));
+        this.sortMap.put(SortField.STRIKING_RATES, Comparator.comparing(cricketDAO -> cricketDAO.strikeRate));
+        this.sortMap.put(SortField.SIX_FOURS, Comparator.comparing(cricketDAO -> cricketDAO.six + cricketDAO.fours));
     }
 
     public int loadIPLData(String csvFilePath) {
