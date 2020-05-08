@@ -22,7 +22,13 @@ public class CricketLeagueAnalyzer {
 
     public CricketLeagueAnalyzer() {
         this.sortMap = new HashMap<>();
-        this.sortMap.put(SortField.AVG, Comparator.comparing(cricketDAO -> cricketDAO.average));
+        Comparator<CricketDAO> avgComparator =
+                Comparator.comparing(iplBatsmanDAO -> iplBatsmanDAO.strikeRate, Comparator.reverseOrder());
+        this.sortMap.put(SortField.AVG, avgComparator);
+
+        Comparator<CricketDAO> strikeRateComparator =
+                Comparator.comparing(iplBatsmanDAO -> iplBatsmanDAO.strikeRate, Comparator.reverseOrder());
+        this.sortMap.put(SortField.STRIKING_RATES, strikeRateComparator);
 
     }
 
@@ -45,7 +51,6 @@ public class CricketLeagueAnalyzer {
         if (daoMap == null || daoMap.size() == 0) {
             throw new CricketAnalyzerException("No Census data available", CricketAnalyzerException.ExceptionType.NO_CENSUS_DATA);
         }
-        daoList = daoMap.values().stream().collect(Collectors.toList());
         daoList.stream().sorted(this.sortMap.get(sortField).reversed()).collect(Collectors.toList());
         String sortedStateCensusJson = new Gson().toJson(daoList);
         return sortedStateCensusJson;

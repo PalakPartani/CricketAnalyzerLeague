@@ -1,6 +1,7 @@
 package com.cricketleague;
 
 import com.cricketleague.exception.CricketAnalyzerException;
+import com.cricketleague.model.IPLCSVFile;
 import com.cricketleague.service.CricketLeagueAnalyzer;
 import com.cricketleague.service.SortField;
 import com.google.gson.Gson;
@@ -25,11 +26,25 @@ public class CricketLeagueTest {
         try {
             cricketLeagueAnalyzer.loadIPLData(IPL_MOST_RUNS_FILE_PATH);
             String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.AVG);
-            CricketDAO[] iplDto = new Gson().fromJson(sortedData, CricketDAO[].class);
-            Assert.assertEquals(83.2, iplDto[0].average, 0.0);
+            IPLCSVFile[] iplDto = new Gson().fromJson(sortedData, IPLCSVFile[].class);
+            Assert.assertEquals("MS Dhoni", iplDto[0].player);
 
         } catch (CricketAnalyzerException e) {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenStrikingRates_ShouldReturnCorrectRecord() {
+        try {
+            cricketLeagueAnalyzer.loadIPLData(IPL_MOST_RUNS_FILE_PATH);
+            String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.STRIKING_RATES);
+            IPLCSVFile[] iplDto = new Gson().fromJson(sortedData, IPLCSVFile[].class);
+            Assert.assertEquals("Ishant Sharma", iplDto[0].player);
+
+        } catch (CricketAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

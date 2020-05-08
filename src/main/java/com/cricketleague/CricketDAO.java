@@ -6,9 +6,11 @@ public class CricketDAO {
 
     public String player;
     public double average;
+    public double strikeRate;
 
     public CricketDAO(IPLCSVFile next) {
         player = next.player;
         average = next.average;
+        strikeRate=next.strikeRate;
     }
 }
