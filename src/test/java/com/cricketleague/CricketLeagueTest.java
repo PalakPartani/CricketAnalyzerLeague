@@ -70,4 +70,17 @@ public class CricketLeagueTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenIPLData_WhenGivenAvg_StrikingRates_ShouldReturnPlayerWithHighestStrikingRates() {
+        try {
+            cricketLeagueAnalyzer.loadIPLData(IPL_MOST_RUNS_FILE_PATH);
+            String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.AVG_SR);
+            IPLCSVFile[] iplDto = new Gson().fromJson(sortedData, IPLCSVFile[].class);
+            Assert.assertEquals("MS Dhoni ", iplDto[0].average);
+        } catch (CricketAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
