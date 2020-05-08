@@ -18,19 +18,27 @@ public class IPLCSVFile {
     @CsvBindByName(column = "4s", required = true)
     public double fours;
 
+    @CsvBindByName(column = "BF", required = true)
+    public double ballsFaced;
+
+
     @Override
     public String toString() {
         return "IPLCSVFile{" +
                 "player='" + player + '\'' +
                 ", average=" + average +
+                ", strikeRate=" + strikeRate +
+                ", sixs=" + sixs +
+                ", fours=" + fours +
                 '}';
     }
 
-    public IPLCSVFile(String player, double average, double strikeRate, double sixs, double fours) {
+    public IPLCSVFile(String player, double average, double strikeRate, double sixs, double fours,double ballsFaced) {
         this.player = player;
         this.average = average;
         this.strikeRate = strikeRate;
         this.sixs = sixs;
         this.fours = fours;
+        this.ballsFaced=ballsFaced;
     }
 }

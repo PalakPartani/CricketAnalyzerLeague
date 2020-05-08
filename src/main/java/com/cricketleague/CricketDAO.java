@@ -9,16 +9,14 @@ public class CricketDAO {
     public double strikeRate;
     public double six;
     public double fours;
-
-    public CricketDAO(String player, double average, double strikeRate, double six, double fours) {
-        this.player = player;
-        this.average = average;
-        this.strikeRate = strikeRate;
-        this.six = six;
-        this.fours = fours;
-    }
+    public double ballsFaced;
 
     public CricketDAO(IPLCSVFile cricketDAO) {
-
+        player = cricketDAO.player;
+        average = cricketDAO.average;
+        strikeRate = cricketDAO.strikeRate;
+        six = cricketDAO.sixs;
+        fours = cricketDAO.fours;
+        ballsFaced = cricketDAO.ballsFaced;
     }
 }

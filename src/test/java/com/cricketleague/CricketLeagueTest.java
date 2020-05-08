@@ -28,7 +28,6 @@ public class CricketLeagueTest {
             String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.AVG);
             IPLCSVFile[] iplDto = new Gson().fromJson(sortedData, IPLCSVFile[].class);
             Assert.assertEquals("MS Dhoni", iplDto[0].player);
-
         } catch (CricketAnalyzerException e) {
             e.printStackTrace();
         }
@@ -55,6 +54,18 @@ public class CricketLeagueTest {
             String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.SIX_FOURS);
             IPLCSVFile[] iplDto = new Gson().fromJson(sortedData, IPLCSVFile[].class);
             Assert.assertEquals("Andre Russell", iplDto[0].player);
+        } catch (CricketAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIPLData_WhenGivenSixAndFours_ShouldReturnPlayerWithHighestStrikingRates() {
+        try {
+            cricketLeagueAnalyzer.loadIPLData(IPL_MOST_RUNS_FILE_PATH);
+            String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.SIX_FOURS);
+            IPLCSVFile[] iplDto = new Gson().fromJson(sortedData, IPLCSVFile[].class);
+            Assert.assertEquals("David Warner", iplDto[0].player);
         } catch (CricketAnalyzerException e) {
             e.printStackTrace();
         }

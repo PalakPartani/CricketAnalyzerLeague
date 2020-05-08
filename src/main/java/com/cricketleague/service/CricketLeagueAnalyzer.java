@@ -16,15 +16,19 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CricketLeagueAnalyzer {
-    Map<SortField, Comparator<CricketDAO>> sortMap;
-    Map<String, CricketDAO> daoMap = new HashMap<>();
-    List<CricketDAO> daoList;
+    Map<SortField, Comparator<IPLCSVFile>> sortMap;
+    Map<String, CricketDAO> daoMap;
+    List<IPLCSVFile> daoList;
 
     public CricketLeagueAnalyzer() {
+        this.daoMap = new HashMap<>();
         this.sortMap = new HashMap<>();
         this.sortMap.put(SortField.AVG, Comparator.comparing(cricketDAO -> cricketDAO.average));
         this.sortMap.put(SortField.STRIKING_RATES, Comparator.comparing(cricketDAO -> cricketDAO.strikeRate));
-        this.sortMap.put(SortField.SIX_FOURS, Comparator.comparing(cricketDAO -> cricketDAO.six + cricketDAO.fours));
+        this.sortMap.put(SortField.SIX_FOURS, Comparator.comparing(cricketDAO -> cricketDAO.sixs + cricketDAO.fours));
+        this.sortMap.put(SortField.SIX_FOURS, Comparator.comparing(cricketDAO -> cricketDAO.sixs + cricketDAO.fours / cricketDAO.ballsFaced * 100));
+
+        //   (runs/balls faced)*100
     }
 
     public int loadIPLData(String csvFilePath) {
@@ -46,7 +50,8 @@ public class CricketLeagueAnalyzer {
         if (daoMap == null || daoMap.size() == 0) {
             throw new CricketAnalyzerException("No Census data available", CricketAnalyzerException.ExceptionType.NO_CENSUS_DATA);
         }
-        daoList.stream().sorted(this.sortMap.get(sortField).reversed()).collect(Collectors.toList());
+        daoList.stream().sorted(this.sortMap.get(sortField).reversed()).
+                collect(Collectors.toList());
         String sortedStateCensusJson = new Gson().toJson(daoList);
         return sortedStateCensusJson;
     }
