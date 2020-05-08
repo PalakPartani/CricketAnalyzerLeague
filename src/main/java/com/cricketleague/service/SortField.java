@@ -1,4 +1,5 @@
 package com.cricketleague.service;
 
-public class CricketLeagueAnaylzer {
+public enum SortField {
+    AVG;
 }
