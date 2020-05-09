@@ -7,10 +7,7 @@ import com.cricketleague.exception.CricketAnalyzerException;
 import com.cricketleague.model.BowlerCSVFile;
 import com.google.gson.Gson;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CricketLeagueAnalyzer {
@@ -31,8 +28,10 @@ public class CricketLeagueAnalyzer {
         this.sortMap.put(SortField.AVG_SR, Comparator.comparing(cricketDAO -> cricketDAO.average * cricketDAO.strikeRate / 100));
         this.sortMap.put(SortField.AVG_SR, Comparator.comparing(cricketDAO -> cricketDAO.runs));
         this.sortMap.put(SortField.ECONOMY, Comparator.comparing(cricketDAO -> cricketDAO.economy));
-        Comparator<CricketDAO> maxWicketsAndStrikeRate = Comparator.comparing(iplData -> iplData.fourWicket + iplData.fiveWicket);
+        Comparator<CricketDAO> maxWicketsAndStrikeRate = Comparator.comparing(cricketDAO -> cricketDAO.fourWicket + cricketDAO.fiveWicket);
         this.sortMap.put(SortField.WICKETS_AND_STRIKERATE, maxWicketsAndStrikeRate.thenComparing(iplData -> iplData.strikeRate));
+        Comparator<CricketDAO> maxWicketsAndStrikeRates = Comparator.comparing(cricketDAO -> cricketDAO.wicket);
+        this.sortMap.put(SortField.WICKET_AND_AVG, maxWicketsAndStrikeRates.thenComparing(cricketDAO -> cricketDAO.strikeRate));
 
         // formula for striking rate  (runs/balls faced)*100
     }

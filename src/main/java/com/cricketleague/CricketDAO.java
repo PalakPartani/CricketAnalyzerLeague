@@ -15,6 +15,7 @@ public class CricketDAO {
     public double economy;
     public double fiveWicket;
     public double fourWicket;
+    public double wicket;
 
 
     public CricketDAO(BattingCSVFile cricketDAO) {
@@ -32,8 +33,9 @@ public class CricketDAO {
         average = bowlerCSVFile.average;
         strikeRate = bowlerCSVFile.strikeRate;
         economy = bowlerCSVFile.economy;
-        fiveWicket=bowlerCSVFile.fiveWicket;
-        fourWicket=bowlerCSVFile.fourWicket;
+        fiveWicket = bowlerCSVFile.fiveWicket;
+        fourWicket = bowlerCSVFile.fourWicket;
+        wicket = bowlerCSVFile.wicket;
 
 
     }
