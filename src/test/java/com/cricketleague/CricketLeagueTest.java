@@ -11,12 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CricketLeagueTest {
-
-
     private static final String IPL_MOST_RUNS_FILE_PATH = "src/test/resources/IPL2019FactsheetMostRuns.csv";
     private static final String IPL_MOST_BALLS_FILE_PATH = "src/test/resources/IPL2019FactsheetMostWkts.csv";
-
-
     CricketLeagueAnalyzer cricketLeagueAnalyzer;
 
     @Before
@@ -117,6 +113,18 @@ public class CricketLeagueTest {
             String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.STRIKING_RATES);
             BowlerCSVFile[] iplDto = new Gson().fromJson(sortedData, BowlerCSVFile[].class);
             Assert.assertEquals("Imran Tahir", iplDto[0].player);
+        } catch (CricketAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIPLData_WhenGivenBestEconomyRates_ShouldReturnCorrectRecord() {
+        try {
+            cricketLeagueAnalyzer.loadIPLBowlerData(CricketLeagueAnalyzer.BatsOrBall.BALLING, IPL_MOST_BALLS_FILE_PATH);
+            String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.ECONOMY);
+            BowlerCSVFile[] iplDto = new Gson().fromJson(sortedData, BowlerCSVFile[].class);
+            Assert.assertEquals("Ben Cutting", iplDto[0].player);
         } catch (CricketAnalyzerException e) {
             e.printStackTrace();
         }

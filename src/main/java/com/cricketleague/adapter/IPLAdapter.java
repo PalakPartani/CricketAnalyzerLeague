@@ -42,5 +42,4 @@ public abstract class IPLAdapter {
             throw new CricketAnalyzerException(e.getMessage(), CricketAnalyzerException.ExceptionType.CSV_FILE_PROBLEM);
         }
     }
-
 }
