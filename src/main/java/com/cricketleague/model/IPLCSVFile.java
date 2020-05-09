@@ -25,7 +25,6 @@ public class IPLCSVFile {
     public int runs;
 
 
-
     @Override
     public String toString() {
         return "IPLCSVFile{" +
@@ -37,13 +36,16 @@ public class IPLCSVFile {
                 '}';
     }
 
-    public IPLCSVFile(String player, double average, double strikeRate, double sixs, double fours,double ballsFaced,int runs) {
+    public IPLCSVFile(String player, double average, double strikeRate, double sixs, double fours, double ballsFaced, int runs) {
         this.player = player;
         this.average = average;
         this.strikeRate = strikeRate;
         this.sixs = sixs;
         this.fours = fours;
-        this.ballsFaced=ballsFaced;
-        this.runs=runs;
+        this.ballsFaced = ballsFaced;
+        this.runs = runs;
+    }
+
+    public IPLCSVFile() {
     }
 }

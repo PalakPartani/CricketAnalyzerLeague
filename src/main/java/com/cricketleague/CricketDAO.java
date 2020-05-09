@@ -1,5 +1,6 @@
 package com.cricketleague;
 
+import com.cricketleague.model.BowlerCSVFile;
 import com.cricketleague.model.IPLCSVFile;
 
 public class CricketDAO {
@@ -20,5 +21,10 @@ public class CricketDAO {
         fours = cricketDAO.fours;
         ballsFaced = cricketDAO.ballsFaced;
         runs = cricketDAO.runs;
+    }
+
+    public CricketDAO(BowlerCSVFile bowlerCSVFile) {
+        player = bowlerCSVFile.player;
+        average = bowlerCSVFile.average;
     }
 }
