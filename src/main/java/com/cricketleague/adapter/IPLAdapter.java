@@ -3,8 +3,7 @@ package com.cricketleague.adapter;
 import com.cricketleague.CricketDAO;
 import com.cricketleague.exception.CricketAnalyzerException;
 import com.cricketleague.model.BowlerCSVFile;
-import com.cricketleague.model.IPLCSVFile;
-import com.cricketleague.service.CricketLeagueAnalyzer;
+import com.cricketleague.model.BattingCSVFile;
 import com.csvparser.CSVBuilderFactory;
 import com.csvparser.ICSVBuilder;
 
@@ -18,7 +17,7 @@ import java.util.Map;
 import java.util.stream.StreamSupport;
 
 public abstract class IPLAdapter {
-    public abstract Map<String, CricketDAO> loadIPLData(String csvFilePath);
+    public abstract Map<String, CricketDAO> loadIPLData(String... csvFilePath);
 
     public static <E> Map<String, CricketDAO> loadIPLData(Class<E> iplClass, String csvFilePath) {
         Map<String, CricketDAO> daoMap = new HashMap<>();
@@ -29,12 +28,12 @@ public abstract class IPLAdapter {
 
             if (iplClass.getName() == "com.cricketleague.model.IPLBatsmanCSV") {
                 StreamSupport.stream(csvIterable.spliterator(), false)
-                        .map(IPLCSVFile.class::cast).
+                        .map(BattingCSVFile.class::cast).
                         forEach(csvFile -> daoMap.put(csvFile.player, new CricketDAO(csvFile)));
             } else if (iplClass.getName() == "com.cricketleague.model.BowlerCSVFile") {
                 StreamSupport.stream(csvIterable.spliterator(), false).
                         map(BowlerCSVFile.class::cast).
-                        forEach(csvFile -> daoMap.put(csvFile.player, new CricketDAO(csvFile)));
+                        forEach(bowlerCSVFile -> daoMap.put(bowlerCSVFile.player, new CricketDAO(bowlerCSVFile)));
             }
             return daoMap;
         } catch (IOException e) {
@@ -43,5 +42,5 @@ public abstract class IPLAdapter {
             throw new CricketAnalyzerException(e.getMessage(), CricketAnalyzerException.ExceptionType.CSV_FILE_PROBLEM);
         }
     }
-}
 
+}

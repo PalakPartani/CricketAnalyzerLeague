@@ -1,7 +1,7 @@
 package com.cricketleague;
 
 import com.cricketleague.model.BowlerCSVFile;
-import com.cricketleague.model.IPLCSVFile;
+import com.cricketleague.model.BattingCSVFile;
 
 public class CricketDAO {
 
@@ -13,7 +13,7 @@ public class CricketDAO {
     public double ballsFaced;
     public int runs;
 
-    public CricketDAO(IPLCSVFile cricketDAO) {
+    public CricketDAO(BattingCSVFile cricketDAO) {
         player = cricketDAO.player;
         average = cricketDAO.average;
         strikeRate = cricketDAO.strikeRate;
@@ -26,5 +26,7 @@ public class CricketDAO {
     public CricketDAO(BowlerCSVFile bowlerCSVFile) {
         player = bowlerCSVFile.player;
         average = bowlerCSVFile.average;
+        strikeRate = bowlerCSVFile.strikeRate;
+
     }
 }

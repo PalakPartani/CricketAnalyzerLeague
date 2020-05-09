@@ -2,7 +2,7 @@ package com.cricketleague.model;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class IPLCSVFile {
+public class BattingCSVFile {
     @CsvBindByName(column = "PLAYER", required = true)
     public String player;
 
@@ -36,7 +36,7 @@ public class IPLCSVFile {
                 '}';
     }
 
-    public IPLCSVFile(String player, double average, double strikeRate, double sixs, double fours, double ballsFaced, int runs) {
+    public BattingCSVFile(String player, double average, double strikeRate, double sixs, double fours, double ballsFaced, int runs) {
         this.player = player;
         this.average = average;
         this.strikeRate = strikeRate;
@@ -46,6 +46,6 @@ public class IPLCSVFile {
         this.runs = runs;
     }
 
-    public IPLCSVFile() {
+    public BattingCSVFile() {
     }
 }
