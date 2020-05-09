@@ -31,6 +31,8 @@ public class CricketLeagueAnalyzer {
         this.sortMap.put(SortField.AVG_SR, Comparator.comparing(cricketDAO -> cricketDAO.average * cricketDAO.strikeRate / 100));
         this.sortMap.put(SortField.AVG_SR, Comparator.comparing(cricketDAO -> cricketDAO.runs));
         this.sortMap.put(SortField.ECONOMY, Comparator.comparing(cricketDAO -> cricketDAO.economy));
+        Comparator<CricketDAO> maxWicketsAndStrikeRate = Comparator.comparing(iplData -> iplData.fourWicket + iplData.fiveWicket);
+        this.sortMap.put(SortField.WICKETS_AND_STRIKERATE, maxWicketsAndStrikeRate.thenComparing(iplData -> iplData.strikeRate));
 
         // formula for striking rate  (runs/balls faced)*100
     }
@@ -44,7 +46,6 @@ public class CricketLeagueAnalyzer {
         daoMap = IPLAdapter.loadIPLData(BowlerCSVFile.class, csvFilePath);
         return daoMap.size();
     }
-
 
     public String getSortedCricketData(SortField sortField) {
         daoList = daoMap.values().stream().collect(Collectors.toList());

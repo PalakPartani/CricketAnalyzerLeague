@@ -124,7 +124,19 @@ public class CricketLeagueTest {
             cricketLeagueAnalyzer.loadIPLBowlerData(CricketLeagueAnalyzer.BatsOrBall.BALLING, IPL_MOST_BALLS_FILE_PATH);
             String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.ECONOMY);
             BowlerCSVFile[] iplDto = new Gson().fromJson(sortedData, BowlerCSVFile[].class);
-            Assert.assertEquals("Ben Cutting", iplDto[0].player);
+            Assert.assertEquals("Lasith Malinga", iplDto[0].player);
+        } catch (CricketAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIPLData_WhenGivenStrikingRatesWith4sand5s_ShouldReturnCorrectRecord() {
+        try {
+            cricketLeagueAnalyzer.loadIPLBowlerData(CricketLeagueAnalyzer.BatsOrBall.BALLING, IPL_MOST_BALLS_FILE_PATH);
+            String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.WICKETS_AND_STRIKERATE);
+            BowlerCSVFile[] iplDto = new Gson().fromJson(sortedData, BowlerCSVFile[].class);
+            Assert.assertEquals("Lasith Malinga", iplDto[0].player);
         } catch (CricketAnalyzerException e) {
             e.printStackTrace();
         }
