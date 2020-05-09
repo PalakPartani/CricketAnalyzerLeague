@@ -16,18 +16,19 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CricketLeagueAnalyzer {
-    Map<SortField, Comparator<IPLCSVFile>> sortMap;
+    Map<SortField, Comparator<CricketDAO>> sortMap;
     Map<String, CricketDAO> daoMap;
-    List<IPLCSVFile> daoList;
+    List<CricketDAO> daoList;
 
     public CricketLeagueAnalyzer() {
         this.daoMap = new HashMap<>();
         this.sortMap = new HashMap<>();
         this.sortMap.put(SortField.AVG, Comparator.comparing(cricketDAO -> cricketDAO.average));
         this.sortMap.put(SortField.STRIKING_RATES, Comparator.comparing(cricketDAO -> cricketDAO.strikeRate));
-        this.sortMap.put(SortField.SIX_FOURS, Comparator.comparing(cricketDAO -> cricketDAO.sixs + cricketDAO.fours));
-        this.sortMap.put(SortField.SIX_FOURS, Comparator.comparing(cricketDAO -> cricketDAO.sixs + cricketDAO.fours / cricketDAO.ballsFaced * 100));
+        this.sortMap.put(SortField.SIX_FOURS, Comparator.comparing(cricketDAO -> cricketDAO.six + cricketDAO.fours));
+        this.sortMap.put(SortField.SIX_FOURS, Comparator.comparing(cricketDAO -> cricketDAO.six + cricketDAO.fours / cricketDAO.ballsFaced * 100));
         this.sortMap.put(SortField.AVG_SR, Comparator.comparing(cricketDAO -> cricketDAO.average * cricketDAO.strikeRate / 100));
+        this.sortMap.put(SortField.AVG_SR, Comparator.comparing(cricketDAO -> cricketDAO.runs));
 
 
         //   (runs/balls faced)*100
@@ -49,11 +50,9 @@ public class CricketLeagueAnalyzer {
     }
 
     public String getSortedCricketData(SortField sortField) {
-        if (daoMap == null || daoMap.size() == 0) {
+        if (daoMap == null || daoMap.size() == 0)
             throw new CricketAnalyzerException("No Census data available", CricketAnalyzerException.ExceptionType.NO_CENSUS_DATA);
-        }
-        daoList.stream().sorted(this.sortMap.get(sortField).reversed()).
-                collect(Collectors.toList());
+        daoList.stream().sorted(this.sortMap.get(sortField).reversed()).collect(Collectors.toList());
         String sortedStateCensusJson = new Gson().toJson(daoList);
         return sortedStateCensusJson;
     }

@@ -21,6 +21,10 @@ public class IPLCSVFile {
     @CsvBindByName(column = "BF", required = true)
     public double ballsFaced;
 
+    @CsvBindByName(column = "Runs", required = true)
+    public int runs;
+
+
 
     @Override
     public String toString() {
@@ -33,12 +37,13 @@ public class IPLCSVFile {
                 '}';
     }
 
-    public IPLCSVFile(String player, double average, double strikeRate, double sixs, double fours,double ballsFaced) {
+    public IPLCSVFile(String player, double average, double strikeRate, double sixs, double fours,double ballsFaced,int runs) {
         this.player = player;
         this.average = average;
         this.strikeRate = strikeRate;
         this.sixs = sixs;
         this.fours = fours;
         this.ballsFaced=ballsFaced;
+        this.runs=runs;
     }
 }

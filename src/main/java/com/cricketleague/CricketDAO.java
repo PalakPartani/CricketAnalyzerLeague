@@ -10,6 +10,7 @@ public class CricketDAO {
     public double six;
     public double fours;
     public double ballsFaced;
+    public int runs;
 
     public CricketDAO(IPLCSVFile cricketDAO) {
         player = cricketDAO.player;
@@ -18,5 +19,6 @@ public class CricketDAO {
         six = cricketDAO.sixs;
         fours = cricketDAO.fours;
         ballsFaced = cricketDAO.ballsFaced;
+        runs = cricketDAO.runs;
     }
 }
