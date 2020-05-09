@@ -160,7 +160,20 @@ public class CricketLeagueTest {
             cricketLeagueAnalyzer.loadIPLBowlerData(CricketLeagueAnalyzer.BatsOrBall.BALLING, IPL_MOST_BALLS_FILE_PATH);
             String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.WICKET_AND_AVG);
             BowlerCSVFile[] iplDto = new Gson().fromJson(sortedData, BowlerCSVFile[].class);
-            Assert.assertEquals("Imran Tahir", iplDto[0].player);
+            Assert.assertEquals("Mayank Markande", iplDto[iplDto.length - 1].player);
+        } catch (CricketAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void givenIPLData_WhenGivenBestAvgOfBatsmanAndBowler_ShouldReturnCorrectPlayer() {
+        try {
+            cricketLeagueAnalyzer.loadIPLData(CricketLeagueAnalyzer.BatsOrBall.BALLING, IPL_MOST_RUNS_FILE_PATH, IPL_MOST_BALLS_FILE_PATH);
+            String sortedData = cricketLeagueAnalyzer.getSortedCricketData(SortField.BEST_BATTING_BOWLING_AVERAGE);
+            BowlerCSVFile[] iplDto = new Gson().fromJson(sortedData, BowlerCSVFile[].class);
+            Assert.assertEquals("Krishnappa Gowtham", iplDto[iplDto.length - 1].player);
         } catch (CricketAnalyzerException e) {
             e.printStackTrace();
         }

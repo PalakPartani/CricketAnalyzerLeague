@@ -36,8 +36,8 @@ public class IPLBattingAdaptee extends IPLAdapter {
             Iterable<BowlerCSVFile> csvIterable = () -> csvIterator;
             StreamSupport.stream(csvIterable.spliterator(), false).filter(stat -> ipldtoMap.get(stat.player) != null)
                     .forEach(stat -> {
-                        ipldtoMap.get(stat.player).average = stat.average;
-                        ipldtoMap.get(stat.player).average = stat.wicket;
+                        ipldtoMap.get(stat.player).battingaverage = stat.average;
+                        ipldtoMap.get(stat.player).battingaverage = stat.wicket;
                     });
 
             return ipldtoMap;

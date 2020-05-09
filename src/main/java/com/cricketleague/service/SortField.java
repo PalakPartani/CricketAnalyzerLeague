@@ -6,10 +6,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum SortField {
-    AVG, STRIKING_RATES, SIX_FOURS, AVG_SR, AVG_RUNS,ECONOMY, WICKETS_AND_STRIKERATE, WICKET_AND_AVG;
-    static Map<SortField, Comparator<CricketDAO>> sortMap;
-
+public enum SortField  {
+    AVG, STRIKING_RATES, SIX_FOURS, AVG_SR, AVG_RUNS, ECONOMY, WICKETS_AND_STRIKERATE, WICKET_AND_AVG, BEST_BATTING_BOWLING_AVERAGE;
+   // static Map<SortField, Comparator<CricketDAO>> sortMap;
+/*
     public static void sortField() {
         sortMap = new HashMap<>();
         Comparator<CricketDAO> avgComparator =
@@ -19,5 +19,5 @@ public enum SortField {
         Comparator<CricketDAO> strikeRateComparator =
                 Comparator.comparing(iplBatsmanDAO -> iplBatsmanDAO.strikeRate, Comparator.reverseOrder());
         sortMap.put(SortField.STRIKING_RATES, strikeRateComparator);
-    }
+    }*/
 }
