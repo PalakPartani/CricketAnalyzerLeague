@@ -16,31 +16,27 @@ import java.util.Map;
 import java.util.stream.StreamSupport;
 
 public class IPLBattingAdaptee extends IPLAdapter {
- /*   @Override
-    public Map<String, CricketDAO> loadIPLData(String csvFilePath) {
-        return super.loadIPLData(IPLCSVFile.class, csvFilePath);
-    }*/
 
     @Override
     public Map<String, CricketDAO> loadIPLData(String... csvFilePath) {
-        Map<String, CricketDAO> iplMap = super.loadIPLData(BattingCSVFile.class, csvFilePath[0]);
+        Map<String, CricketDAO> map = super.loadIPLData(BattingCSVFile.class, csvFilePath[0]);
         if (csvFilePath.length > 1)
-            this.loadIPLData(iplMap, csvFilePath[1]);
-        return iplMap;
+            this.loadIPLData(map, csvFilePath[1]);
+        return map;
     }
 
-    private Map<String, CricketDAO> loadIPLData(Map<String, CricketDAO> ipldtoMap, String csvFilePath) {
+    private Map<String, CricketDAO> loadIPLData(Map<String, CricketDAO> daoMap, String csvFilePath) {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator<BowlerCSVFile> csvIterator = csvBuilder.getCSVFileIterator(reader, BowlerCSVFile.class);
             Iterable<BowlerCSVFile> csvIterable = () -> csvIterator;
-            StreamSupport.stream(csvIterable.spliterator(), false).filter(stat -> ipldtoMap.get(stat.player) != null)
-                    .forEach(stat -> {
-                        ipldtoMap.get(stat.player).battingaverage = stat.average;
-                        ipldtoMap.get(stat.player).battingaverage = stat.wicket;
+            StreamSupport.stream(csvIterable.spliterator(), false).filter(csvFile -> daoMap.get(csvFile.player) != null)
+                    .forEach(csvFile -> {
+                        daoMap.get(csvFile.player).ballingAvg = csvFile.average;
+                        daoMap.get(csvFile.player).average = csvFile.wicket;
                     });
 
-            return ipldtoMap;
+            return daoMap;
         } catch (IOException e) {
             throw new CricketAnalyzerException(e.getMessage(),
                     CricketAnalyzerException.ExceptionType.CSV_FILE_PROBLEM);

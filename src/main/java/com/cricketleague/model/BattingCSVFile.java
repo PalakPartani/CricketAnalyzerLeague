@@ -24,6 +24,15 @@ public class BattingCSVFile {
     @CsvBindByName(column = "Runs", required = true)
     public int runs;
 
+    public BattingCSVFile(String player, double battingaverage, double strikeRate, double fours, int runs, double six) {
+        this.player = player;
+        this.average = battingaverage;
+        this.strikeRate = strikeRate;
+        this.fours = fours;
+        this.runs = runs;
+        this.sixs = six;
+
+    }
 
     @Override
     public String toString() {
