@@ -24,6 +24,10 @@ public class BattingCSVFile {
     @CsvBindByName(column = "Runs", required = true)
     public int runs;
 
+    @CsvBindByName(column = "Mat", required = true)
+    public int matches;
+
+
     public BattingCSVFile(String player, double battingaverage, double strikeRate, double fours, int runs, double six) {
         this.player = player;
         this.average = battingaverage;
@@ -31,7 +35,9 @@ public class BattingCSVFile {
         this.fours = fours;
         this.runs = runs;
         this.sixs = six;
+    }
 
+    public BattingCSVFile() {
     }
 
     @Override
@@ -43,18 +49,5 @@ public class BattingCSVFile {
                 ", sixs=" + sixs +
                 ", fours=" + fours +
                 '}';
-    }
-
-    public BattingCSVFile(String player, double average, double strikeRate, double sixs, double fours, double ballsFaced, int runs) {
-        this.player = player;
-        this.average = average;
-        this.strikeRate = strikeRate;
-        this.sixs = sixs;
-        this.fours = fours;
-        this.ballsFaced = ballsFaced;
-        this.runs = runs;
-    }
-
-    public BattingCSVFile() {
     }
 }

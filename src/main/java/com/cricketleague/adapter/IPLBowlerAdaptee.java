@@ -2,7 +2,6 @@ package com.cricketleague.adapter;
 
 import com.cricketleague.CricketDAO;
 import com.cricketleague.model.BowlerCSVFile;
-
 import java.util.Map;
 
 public class IPLBowlerAdaptee extends IPLAdapter {
@@ -11,5 +10,4 @@ public class IPLBowlerAdaptee extends IPLAdapter {
     public Map<String, CricketDAO> loadIPLData(String... csvFilePath) {
         return super.loadIPLData(BowlerCSVFile.class, csvFilePath[0]);
     }
-
 }

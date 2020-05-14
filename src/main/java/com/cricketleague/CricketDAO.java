@@ -7,7 +7,7 @@ import com.cricketleague.service.CricketLeagueAnalyzer;
 public class CricketDAO {
 
     public String player;
-    public double battingaverage;
+    public double battingAverage;
     public double ballingAvg;
     public double strikeRate;
     public double six;
@@ -18,39 +18,35 @@ public class CricketDAO {
     public double fiveWicket;
     public double fourWicket;
     public double wicket;
-    public double average;
-
+    public double matches;
 
     public CricketDAO(BattingCSVFile cricketDAO) {
         player = cricketDAO.player;
-        average = cricketDAO.average;
-        battingaverage = cricketDAO.average;
+        battingAverage = cricketDAO.average;
         strikeRate = cricketDAO.strikeRate;
         six = cricketDAO.sixs;
         fours = cricketDAO.fours;
         ballsFaced = cricketDAO.ballsFaced;
         runs = cricketDAO.runs;
+        matches=cricketDAO.matches;
     }
 
-    public CricketDAO(BowlerCSVFile bowlerCSVFile) {
-        player = bowlerCSVFile.player;
-        average = bowlerCSVFile.average;
-        ballingAvg = bowlerCSVFile.average;
-        strikeRate = bowlerCSVFile.strikeRate;
-        economy = bowlerCSVFile.economy;
-        fiveWicket = bowlerCSVFile.fiveWicket;
-        fourWicket = bowlerCSVFile.fourWicket;
-        wicket = bowlerCSVFile.wicket;
-
-
+    public CricketDAO(BowlerCSVFile cricketDao) {
+        player = cricketDao.player;
+        ballingAvg = Math.max(this.ballingAvg,cricketDao.ballingAvg);
+       // average=cricketDao.ballingAvg;
+        strikeRate = cricketDao.strikeRate;
+        economy = cricketDao.economy;
+        fiveWicket = cricketDao.fiveWicket;
+        fourWicket = cricketDao.fourWicket;
+        wicket = cricketDao.wicket;
     }
 
     public Object getCricketDTO(CricketLeagueAnalyzer.BatsOrBall batsOrBall) {
         if (batsOrBall.equals(CricketLeagueAnalyzer.BatsOrBall.BATTING)) {
-            return new BattingCSVFile(player, battingaverage, strikeRate, fours, runs, six);
+            return new BattingCSVFile(player, battingAverage, strikeRate, fours, runs, six);
         } else {
-            return new BowlerCSVFile(player, ballingAvg, strikeRate, economy, fiveWicket, fourWicket, wicket);
-
+            return new BowlerCSVFile(player, ballingAvg, strikeRate, economy, (int) fiveWicket, (int) fourWicket, wicket);
         }
     }
 }

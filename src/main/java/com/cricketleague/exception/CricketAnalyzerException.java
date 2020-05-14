@@ -7,7 +7,7 @@ public class CricketAnalyzerException extends RuntimeException {
     }
 
     public enum ExceptionType {
-        CSV_FILE_PROBLEM, NO_CENSUS_DATA, INVALID_TYPE;
+        CSV_FILE_PROBLEM, NO_CRICKET_DATA_AVAILABLE, INVALID_TYPE;
 
 
     }

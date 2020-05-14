@@ -1,18 +1,15 @@
 package com.cricketleague.service;
 
 import com.cricketleague.CricketDAO;
-import com.cricketleague.adapter.IPLAdapter;
 import com.cricketleague.adapter.IPLAdapterFactory;
 import com.cricketleague.exception.CricketAnalyzerException;
-import com.cricketleague.model.BowlerCSVFile;
 import com.google.gson.Gson;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CricketLeagueAnalyzer {
-
-    public enum BatsOrBall {BATTING, BALLING}
+    public enum BatsOrBall {BATTING, BALLING, FEILDING;}
 
     Map<String, CricketDAO> daoMap = null;
     List<CricketDAO> daoList = null;
@@ -25,19 +22,13 @@ public class CricketLeagueAnalyzer {
 
     //for finding best comparison between batsman and bowler
     public int loadIPLData(BatsOrBall batsOrBall, String... csvFilePath) {
-        daoMap = new IPLAdapterFactory().getIPLAdapter(batsOrBall, csvFilePath);
-        return daoMap.size();
-    }
-
-    //loading batsman data through adapter pattern
-    public int loadIPLBatsmenData(String csvFilePath) {
         daoMap = IPLAdapterFactory.getIPLAdapter(batsOrBall, csvFilePath);
         return daoMap.size();
     }
 
-    //loading bowler data through adapter pattern
-    public int loadIPLBowlerData(BatsOrBall batsOrBall, String csvFilePath) {
-        daoMap = IPLAdapter.loadIPLData(BowlerCSVFile.class, csvFilePath);
+    //loading batsman data through adapter pattern
+    public int loadIPLData(String... csvFilePath) {
+        daoMap = IPLAdapterFactory.getIPLAdapter(batsOrBall, csvFilePath);
         return daoMap.size();
     }
 
@@ -46,16 +37,19 @@ public class CricketLeagueAnalyzer {
         daoList = daoMap.values().stream().collect(Collectors.toList());
 
         if (daoList == null || daoList.size() == 0)
-            throw new CricketAnalyzerException("No Census data available", CricketAnalyzerException.ExceptionType.NO_CENSUS_DATA);
+            throw new CricketAnalyzerException("No Cricket data available", CricketAnalyzerException.ExceptionType.NO_CRICKET_DATA_AVAILABLE);
         List list = this.sort(sortField.sortMap.get(sortField).reversed());
 
+        //.stream
+        //.filter(ipl->ipl.ballingavg!=0)
         String sortedStateCensusJson = new Gson().toJson(list);
         return sortedStateCensusJson;
-
     }
 
     private ArrayList sort(Comparator<CricketDAO> comparator) {
-        return (ArrayList) daoList.stream().sorted(comparator).map(cricketDAO -> cricketDAO.getCricketDTO(batsOrBall)).collect(Collectors.toList());
+        return (ArrayList) daoList.stream().filter(cricketDAO -> cricketDAO.ballingAvg != 0)
+                .sorted(comparator).map(cricketDAO -> cricketDAO.getCricketDTO(batsOrBall)).collect(Collectors.toList());
 
     }
 }
+//  return (ArrayList) daoList.stream().sorted(comparator).map(cricketDAO -> cricketDAO.getCricketDTO(batsOrBall)).collect(Collectors.toList());

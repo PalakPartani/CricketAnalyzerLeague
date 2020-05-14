@@ -22,19 +22,19 @@ public abstract class IPLAdapter {
 
     public abstract Map<String, CricketDAO> loadIPLData(String... csvFilePath);
 
-    public static <E> Map<String, CricketDAO> loadIPLData(Class<E> iplClass, String csvFilePath) {
+    public static <E> Map<String, CricketDAO> loadIPLData(Class<E> csvClass, String csvFilePath) {
         daoMap = new HashMap<>();
 
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
             ICSVBuilder icsvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<E> csvIterator = icsvBuilder.getCSVFileIterator(reader, iplClass);
+            Iterator<E> csvIterator = icsvBuilder.getCSVFileIterator(reader, csvClass);
             Iterable<E> csvIterable = () -> csvIterator;
 
-            if (iplClass.getName() == "com.cricketleague.model.BattingCSVFile") {
+            if (csvClass.getName() == "com.cricketleague.model.BattingCSVFile") {
                 StreamSupport.stream(csvIterable.spliterator(), false)
                         .map(BattingCSVFile.class::cast).
                         forEach(csvFile -> daoMap.put(csvFile.player, new CricketDAO(csvFile)));
-            } else if (iplClass.getName() == "com.cricketleague.model.BowlerCSVFile") {
+            } else if (csvClass.getName() == "com.cricketleague.model.BowlerCSVFile") {
                 StreamSupport.stream(csvIterable.spliterator(), false).
                         map(BowlerCSVFile.class::cast).
                         forEach(bowlerCSVFile -> daoMap.put(bowlerCSVFile.player, new CricketDAO(bowlerCSVFile)));
