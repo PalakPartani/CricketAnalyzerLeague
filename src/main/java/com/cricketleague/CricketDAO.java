@@ -27,14 +27,13 @@ public class CricketDAO {
         six = cricketDAO.sixs;
         fours = cricketDAO.fours;
         ballsFaced = cricketDAO.ballsFaced;
-        runs = cricketDAO.runs;
+        runs = Math.max(this.runs,cricketDAO.runs);
         matches=cricketDAO.matches;
     }
 
     public CricketDAO(BowlerCSVFile cricketDao) {
         player = cricketDao.player;
         ballingAvg = Math.max(this.ballingAvg,cricketDao.ballingAvg);
-       // average=cricketDao.ballingAvg;
         strikeRate = cricketDao.strikeRate;
         economy = cricketDao.economy;
         fiveWicket = cricketDao.fiveWicket;
